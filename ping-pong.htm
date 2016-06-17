@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+  PING-PONG
+  </title>
+</head>
+<body>
+
+  <h1 style="color:black;font-size:30px;">
+  <u>
+  THE GAME
+  </u>
+  </h1>
+  
+  <canvas id="myCanvas" width="600" height="400" style="border:1px solid #000000;" onmousemove="showCoords(event)" onmouseout="clearCoor()">
+  </canvas>
+  
+  <script>
+    var flag=1;
+    var x,y,hit,ready,time=0,ballx=20,bally=0;
+    var c=document.getElementById("myCanvas");
+    var shots=0;
+    var ctx=c.getContext("2d");
+    ctx.fillStyle="#0000FF";
+    ctx.fillRect(580,160,20,80);
+    ctx.fillStyle="#FF0000";
+    ctx.fillRect(0,0,20,80);
+    var x=580,y=160;
+    //gets the position of the mouse pointer and moves the bat accordingly
+    function showCoords(event) 
+    {
+      x = event.clientX;
+      y = event.clientY;
+      ctx.fillStyle="#FFFFFF";
+      ctx.fillRect(580,0,20,400);
+      ctx.fillStyle="#0000FF";
+      ctx.fillRect(580,y-40,20,80);
+    }
+    var compx=0;
+    function game()
+    {
+      hit=Math.floor((Math.random() * 380));
+      var count=1;
+      for(var i=1;i<=20;i++)
+      {
+        setTimeout(function()
+        {
+          ctx.clearRect(20, 0, 540, 400);
+          ctx.clearRect(560, 0, 20, 400);
+          ctx.fillStyle="#000000";
+          ctx.fillRect(((560-ballx)/20*count)+ballx,((hit-bally)/20*count)+bally,20,20);
+          count++;
+        },i*50);
+      }
+      setTimeout(function()
+      {
+        if((y-hit)>60||(y-hit)<-40)
+        {
+          document.write("GAME OVER WITH SCORE : "+shots);
+          flag=0;
+        }
+        shots++;
+        ballx=560;
+        bally=hit;
+        ctx.clearRect(560, 0, 20, 400);
+      },1050);
+      var count1=1;
+      ready=Math.floor((Math.random() * 380));
+      for(var j=1;j<=20;j++)
+      {
+        setTimeout(function()
+        {
+          ctx.clearRect(20, 0, 540, 400);
+          ctx.clearRect(0, 0, 20, 400);
+          ctx.fillStyle="#000000";
+          ctx.fillRect(ballx-((ballx-20)/20*count1),hit-((hit-ready+10)/20*count1),20,20);
+          ctx.fillStyle="#FF0000";
+          ctx.fillRect(0,compx-((compx-ready+40)/20*count1),20,80)
+          count1++;
+        },1050+(j*50));
+      }
+      setTimeout(function()
+      {
+        ballx=20;
+        bally=ready;
+        compx=ready-40;
+      },2100);
+    }
+    for(var i=0;i<100&&flag==1;i++)
+    setTimeout(function ()
+    {
+      if(flag)
+      game();
+    },(i*2150));
+  </script>
+</body>
+</html>
