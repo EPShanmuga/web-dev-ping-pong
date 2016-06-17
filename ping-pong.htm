@@ -7,19 +7,15 @@
 </head>
 <body>
 
-  <h1 style="color:black;font-size:30px;">
-  <u>
-  THE GAME
-  </u>
-  </h1>
-  
   <canvas id="myCanvas" width="600" height="400" style="border:1px solid #000000;" onmousemove="showCoords(event)" onmouseout="clearCoor()">
   </canvas>
   
   <script>
     var flag=1;
+    //x,y, contain the mouse position; ballx,bally contain the position of the ball
     var x,y,hit,ready,time=0,ballx=20,bally=0;
     var c=document.getElementById("myCanvas");
+    //shots is the number of successful hits by the player
     var shots=0;
     var ctx=c.getContext("2d");
     ctx.fillStyle="#0000FF";
@@ -37,13 +33,16 @@
       ctx.fillStyle="#0000FF";
       ctx.fillRect(580,y-40,20,80);
     }
+    //compx holds the position of the computer bat
     var compx=0;
     function game()
     {
+      //hit is the y-coordinate of the lace where the ball reaches the player side
       hit=Math.floor((Math.random() * 380));
       var count=1;
       for(var i=1;i<=20;i++)
       {
+        //moves the ball from computer side to player side
         setTimeout(function()
         {
           ctx.clearRect(20, 0, 540, 400);
@@ -55,20 +54,25 @@
       }
       setTimeout(function()
       {
+        //checking whether the player's bat hit the ball
         if((y-hit)>60||(y-hit)<-40)
         {
+          //finishes the game if it did not
           document.write("GAME OVER WITH SCORE : "+shots);
           flag=0;
         }
+        //storing the new position of the ball
         shots++;
         ballx=560;
         bally=hit;
         ctx.clearRect(560, 0, 20, 400);
       },1050);
       var count1=1;
+      //ready hold the y-coordinate of the place where the ball will reach on the computer's side
       ready=Math.floor((Math.random() * 380));
       for(var j=1;j<=20;j++)
       {
+        //moving the ball and the computer bat simultaneously towards the same point
         setTimeout(function()
         {
           ctx.clearRect(20, 0, 540, 400);
@@ -82,11 +86,13 @@
       }
       setTimeout(function()
       {
+        //storing the new positions of the ball and tha computer's bat
         ballx=20;
         bally=ready;
         compx=ready-40;
       },2100);
     }
+    //loop for hitting the ball forth and back
     for(var i=0;i<100&&flag==1;i++)
     setTimeout(function ()
     {
@@ -94,5 +100,10 @@
       game();
     },(i*2150));
   </script>
+  <u>
+  <h1 style="font-size:60px;">
+    PING-PONG
+  </h1>
+  </u>
 </body>
 </html>
